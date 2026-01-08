@@ -1,36 +1,25 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from questao2 import questao_2_cena_mundo
+from utils import get_translation_matrix, apply_transformation
 
-from models.get_solids import get_solids
-
-def perspective_projection(vertices, f=5.0):
-    """
-    Projeta vértices 3D (no sistema da câmera) para 2D.
-    Retorna array (N, 2)
-    """
-    projected = []
-
-    for x, y, z in vertices:
-        if z <= 0:
-            projected.append([np.nan, np.nan])  # fora do volume de visão
-        else:
-            xp = f * x / z
-            yp = f * y / z
-            projected.append([xp, yp])
-
-    return np.array(projected)
+def perspective_project(v, d=1.0):
+    x, y, z = v
+    if z <= 0:
+        return None
+    return [-d * x / z, -d * y / z]
 
 
 def extract_edges(faces):
     edges = set()
-    for f in faces:
-        a, b, c = f
+    for a, b, c in faces:
         edges.add(tuple(sorted((a, b))))
         edges.add(tuple(sorted((b, c))))
         edges.add(tuple(sorted((c, a))))
     return list(edges)
 
-def plot_scene_2d(scene_camera):
+
+def plot_scene_perspective(scene_camera, d=1.0):
     fig, ax = plt.subplots(figsize=(8, 8))
 
     colors = {
@@ -39,19 +28,19 @@ def plot_scene_2d(scene_camera):
         "toro": "green"
     }
 
-    for name, (v_cam, faces) in scene_camera.items():
-        v_2d = perspective_projection(v_cam, f=5.0)
+    for name, (vertices, faces) in scene_camera.items():
+        projected = [perspective_project(v, d) for v in vertices]
         edges = extract_edges(faces)
 
         for i, j in edges:
-            if not np.any(np.isnan(v_2d[[i, j]])):
+            if projected[i] is not None and projected[j] is not None:
                 ax.plot(
-                    [v_2d[i, 0], v_2d[j, 0]],
-                    [v_2d[i, 1], v_2d[j, 1]],
-                    color=colors[name]
+                    [projected[i][0], projected[j][0]],
+                    [projected[i][1], projected[j][1]],
+                    color=colors.get(name, "black")
                 )
 
-    ax.set_title("Projeção em Perspectiva – Cena 2D")
+    ax.set_title("Questão 4 – Projeção em Perspectiva (2D)")
     ax.set_xlabel("Xp")
     ax.set_ylabel("Yp")
     ax.set_aspect("equal")
@@ -59,4 +48,14 @@ def plot_scene_2d(scene_camera):
 
     plt.show()
 
-plot_scene_2d(get_solids())
+
+scene_world = questao_2_cena_mundo()
+
+# Move a cena inteira para frente da câmera
+T_cam = get_translation_matrix(0, 0, 10)
+
+scene_camera = {}
+for name, (v, f) in scene_world.items():
+    scene_camera[name] = (apply_transformation(v, T_cam), f)
+
+plot_scene_perspective(scene_camera, d=5.0)

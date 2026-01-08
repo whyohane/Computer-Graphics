@@ -100,7 +100,8 @@ def plot_scene(scene):
     ax.set_zlim(-8, 8)
     ax.set_box_aspect([1, 1, 1])
 
-    ax.set_title(f"Questão 2 – Cena no Mundo\nMáxima coordenada encontrada: {max_coord_found:.2f}")
+    ax.set_title(f"Questão 2 – Cena no Mundo")
+                 
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")
