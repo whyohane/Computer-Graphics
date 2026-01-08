@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def get_torus_mesh(r_inner, r_outer, nu=30, nv=30):
+def get_torus_mesh(r_inner, r_outer, nu=10, nv=10):
     R = (r_outer + r_inner) / 2.0
     r = (r_outer - r_inner) / 2.0
     

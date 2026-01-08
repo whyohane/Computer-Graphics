@@ -1,6 +1,6 @@
 import numpy as np
 
-def get_hermite_mesh(P0, P1, T0, T1, radius=0.3, steps=40, resolution=15):
+def get_hermite_mesh(P0, P1, T0, T1, radius=0.3, steps=40, resolution=8):
     t = np.linspace(0, 1, steps).reshape(-1, 1)
     
     h1 = 2*t**3 - 3*t**2 + 1

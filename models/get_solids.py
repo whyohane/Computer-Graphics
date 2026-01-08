@@ -13,7 +13,7 @@ def get_solids():
 # Tangentes menores e mais "verticais" para o S não ficar gordo demais
     t0 = np.array([0, 20, 0])  # Sobe reto
     t1 = np.array([0, 20, 0])  # Chega subindo reto
-    v_herm, f_herm = get_hermite_mesh(p0, p1, t0, t1, radius=0.3, steps=30)
+    v_herm, f_herm = get_hermite_mesh(p0, p1, t0, t1, radius=0.3, steps=10)
     
     v_torus, f_torus = get_torus_mesh(r_inner=0.8, r_outer=2.0)
     
