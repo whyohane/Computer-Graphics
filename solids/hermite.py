@@ -21,19 +21,16 @@ def get_hermite_mesh(P0, P1, T0, T1, radius=0.3, steps=40, resolution=8):
         p, tan = path[i], tangents[i]
         tan /= np.linalg.norm(tan)
         
-        # Criar base ortonormal (Frame de Frenet simplificado)
         up = np.array([0,0,1]) if abs(tan[2]) < 0.9 else np.array([1,0,0])
         side = np.cross(tan, up)
         side /= np.linalg.norm(side)
         up_final = np.cross(side, tan)
         
-        # Gerar o anel de vértices
         angles = np.linspace(0, 2*np.pi, resolution, endpoint=False)
         for a in angles:
             v = p + radius * (np.cos(a)*side + np.sin(a)*up_final)
             vertices.append(v)
             
-    # Faces conectando os anéis
     faces = []
     for i in range(steps - 1):
         for j in range(resolution):

@@ -17,7 +17,6 @@ def rasterize_scene(scene, resolution):
     img = Image.new("RGB", (width, height), "white")
     zbuffer = [[float("inf")] * width for _ in range(height)]
 
-    # Junta todos os pontos 2D
     all_pts = []
     for v, _ in scene.values():
         all_pts.extend(v[:, :2])

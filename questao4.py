@@ -51,7 +51,6 @@ def plot_scene_perspective(scene_camera, d=1.0):
 
 scene_world = questao_2_cena_mundo()
 
-# Move a cena inteira para frente da câmera
 T_cam = get_translation_matrix(0, 0, 10)
 
 scene_camera = {}

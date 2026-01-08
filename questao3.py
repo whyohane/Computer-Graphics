@@ -2,9 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from questao2 import questao_2_cena_mundo
-from utils import apply_transformation
 
 def normalize(v):
         norm = math.sqrt(sum(coord * coord for coord in v))
@@ -38,9 +36,9 @@ def compute_camera_matrix(eye, at, up):
     return [u, v, [-n[0], -n[1], -n[2]]]
 
 scene = questao_2_cena_mundo()
-eye = [6, 6, 6]     # posição da câmera
-at  = [0, 0, 0]     # ponto observado
-up  = [0, 0, 1]     # eixo vertical
+eye = [6, 6, 6]     
+at  = [0, 0, 0]     
+up  = [0, 0, 1]     
 R = compute_camera_matrix(eye, at, up)
 scene_cam = {}
 
